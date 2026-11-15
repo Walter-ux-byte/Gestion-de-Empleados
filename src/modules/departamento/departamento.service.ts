@@ -1,15 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateDepartamentoDto } from './dto/create-departamento.dto';
 import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
+import { Repository } from 'typeorm';
+import { Departamento } from './entities/departamento.entity';
 
 @Injectable()
 export class DepartamentoService {
+  constructor(
+    @Inject('DEPARTAMENTO_REPOSITORY')
+    private readonly departamentoRepository: Repository<Departamento>
+  ) {}
+
   create(createDepartamentoDto: CreateDepartamentoDto) {
     return 'This action adds a new departamento';
   }
 
-  findAll() {
-    return `This action returns all departamento`;
+  findAll(): Promise<Departamento[]> {
+    return this.departamentoRepository.find();
   }
 
   findOne(id: number) {

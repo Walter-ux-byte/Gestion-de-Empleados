@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../../users/entities/user.entity'; // Asegúrate de que esta ruta llegue a tu user.entity
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Persona {
@@ -12,8 +12,11 @@ export class Persona {
   @Column()
   apellidos!: string;
 
-  // Relación 1 a 1 con el Usuario
-  @OneToOne(() => User)
-  @JoinColumn()
-  user!: User;
+  @Column({ type: 'varchar', nullable: true })
+  mail?: string | null;
+
+  // Relación 1 a 1 con el Usuario (opcional)
+  @OneToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'userId' })
+  user?: User;
 }
