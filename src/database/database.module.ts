@@ -11,18 +11,16 @@ import { ConfigModule } from 'src/config/config.module';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get('HOST') || 'localhost',
-        port: +config.get('PORT_DB'),
-        username: config.get('USERNAME') || 'root',
-        password: config.get('PASSWORD') || 'prueba',
-        database: config.get('DATABASE'),
-        entities: [
-          __dirname + '/../**/*.entity{.ts,.js}',
-        ],
-      })
-    })
+        host: config.get('DB_HOST'),
+        port: Number(config.get('DB_PORT')),
+        username: config.get('DB_USERNAME'),
+        password: config.get('DB_PASSWORD'),
+        database: config.get('DB_DATABASE'),
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      }),
+    }),
   ],
   providers: [...databaseProvider, ConfigService],
-  exports: [...databaseProvider]
+  exports: [...databaseProvider],
 })
 export class DatabaseModule {}

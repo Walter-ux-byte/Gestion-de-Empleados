@@ -1,28 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Categoria } from '../../categoria/entities/categoria.entity'; // Verifica que esta ruta apunte bien a tu entidad de categoría
+
+import { Categoria } from "../../categoria/entities/categoria.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('productos')
 export class Producto {
-  @PrimaryGeneratedColumn()
-  id!: number;
 
-  @Column()
-  nombre!: string;
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  precio!: number;
+    @Column({ type: 'varchar', length: 250 })
+    nombre!: string;
 
-  @Column()
-  stock!: number;
+    @Column({ type: 'decimal', precision: 10, scale: 2 })
+    precio!: number;
 
-  @Column({ nullable: true })
-  image!: string;
+    @Column({ type: 'int' })
+    stock!: number;
 
-  @Column({ type: 'text', nullable: true })
-  descripcion!: string;
+    @Column({ type: 'varchar', length: 250, nullable: true })
+    image!: string;
 
-  @Column({ default: true })
-  estado!: boolean;
-  @ManyToOne(() => Categoria, (cat) => cat.productos)
-  categoria!: Categoria;
+    @Column({ type: 'text', nullable: true })
+    descripcion!: string;
+
+    @Column({ type: 'boolean', default: true })
+    estado!: boolean;
+
+    @ManyToOne(() => Categoria, (categoria) => categoria.productos)
+    categoria!: Categoria;
 }

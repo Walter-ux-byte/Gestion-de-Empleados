@@ -1,18 +1,18 @@
 import { DataSource } from 'typeorm';
-import { ConfigService } from '../config/config.service'; 
+import { ConfigService } from '../config/config.service';
 
 export const databaseProvider = [
   {
-    provide: 'DATABASE_CONNECTION_POSTGRES', 
+    provide: 'DATABASE_CONNECTION_POSTGRES',
     inject: [ConfigService],
     useFactory: (config: ConfigService) => {
       const dataSource = new DataSource({
         type: 'postgres',
-        host: config.get('HOST') || 'localhost',
-        port: +config.get('PORT_DB'),
-        username: config.get('USERNAME') || 'root',
-        password: config.get('PASSWORD')|| 'prueba',
-        database: config.get('DATABASE'),
+        host: config.get('DB_HOST'),
+        port: Number(config.get('DB_PORT')),
+        username: config.get('DB_USERNAME'),
+        password: config.get('DB_PASSWORD'),
+        database: config.get('DB_DATABASE'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       });
 

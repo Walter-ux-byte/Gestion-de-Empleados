@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
+import * as path from 'path';
 import { parse } from 'dotenv';
 
 @Injectable()
@@ -8,18 +9,22 @@ export class ConfigService {
 
   constructor() {
     const env = process.env.NODE_ENV || 'development';
-    const envFilePath = `${__dirname}/../../../.env.${env}`;
-    const existsPath = fs.existsSync(envFilePath);
+    const envFilePath = path.resolve(process.cwd(), `.env.${env}`);
+    const envFileExists = fs.existsSync(envFilePath);
 
-    if (!existsPath) {
-      console.log(`.env.${env} no existe en la ruta: ${envFilePath}`);
-      process.exit(0); 
+    if (!envFileExists && env !== 'test') {
+      throw new Error(`Environment file not found: ${envFilePath}`);
     }
 
-    this.envConfig = parse(fs.readFileSync(envFilePath));
+    this.envConfig = envFileExists ? parse(fs.readFileSync(envFilePath)) : {};
   }
 
   get(key: string): string {
-    return this.envConfig[key];
+    const value = this.envConfig[key];
+    if (!value) {
+      throw new Error(`Missing required environment variable: ${key}`);
+    }
+
+    return value;
   }
 }

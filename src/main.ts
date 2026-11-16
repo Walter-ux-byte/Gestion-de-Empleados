@@ -5,26 +5,22 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  //habilitamos CORS
+//habilitamos CORS
   app.enableCors();
-  
-  // class validator
+
+  //class validator
   app.useGlobalPipes(new ValidationPipe());
 
-  // swagger
+  //swagger
   const config = new DocumentBuilder()
-    .setTitle('API de Proyecto PW') // Nombre de tu proyecto
-    .setDescription('Documentación de la API para Autenticación y Usuarios') // Descripción real
+    .addBearerAuth()
+    .setTitle('Backend API Nest')
+    .setDescription('Backend API Nest')
     .setVersion('1.0')
-    .addTag('auth') // Etiqueta para agrupar tu login/registro
-    .addTag('users') // Etiqueta para agrupar tus usuarios
-    .addBearerAuth() // ¡Súper importante para que puedas probar el token desde Swagger!
+    .addTag('Api Rest')
     .build();
-    
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
   await app.listen(3000);
 }
 bootstrap();

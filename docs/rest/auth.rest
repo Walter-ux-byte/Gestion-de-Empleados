@@ -16,12 +16,10 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "name": "Prueba2",
-  "email": "wl2@gmail.com",
+  "email": "prueba@gmail.com",
   "password": "123456"
 }
 
-
 ### users
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE3ODI2ODYxNzksImV4cCI6MTc4MjY4NjIzOX0.95hrAvev0DyvfAH9svw-dvioC_u9AKXGtghBMfokme8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBydWViYUBnbWFpbC5jb20iLCJpZCI6MTIsImlhdCI6MTc5NDgzNjYzMiwiZXhwIjoxNzk0ODQwMjMyfQ.KtPOVD0JgUVMFbRtzuE_--qj8tKzo61DqwLA2M50LxQ
